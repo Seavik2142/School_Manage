@@ -1,0 +1,13 @@
+import models.user as user
+
+class Teacher(user.User):
+    def __init__(self, user_id, name, email, password, department):
+        super().__init__(user_id, name, email, password)
+        self.department = department
+
+    def show_info(self):
+        print("-----Teacher Information-----")
+        print(f"ID: {self.user_id}")
+        print(f"Name: {self.name}")
+        print(f"Email: {self.email}")
+        print(f"Department: {self.department}")
