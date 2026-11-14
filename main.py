@@ -95,12 +95,209 @@
 
 
 
+# from models.student import Student
+# from repositories.student_repository import StudentRepository
+
+
+# # Create Student Objects
+# student1 = Student(
+#     "S001",
+#     "Seavik",
+#     "seavik@example.com",
+#     "password123",
+#     "Computer Science"
+# )
+
+# student2 = Student(
+#     "S002",
+#     "Dara",
+#     "dara@example.com",
+#     "password456",
+#     "Software Engineering"
+# )
+
+
+# # Create Repository
+# repository = StudentRepository()
+
+
+# # CREATE
+# repository.add_student(student1)
+# repository.add_student(student2)
+
+
+# # READ ALL
+# print("\n----- All Students -----")
+
+# for student in repository.get_all_students():
+#     student.show_info()
+#     print()
+
+
+# # READ ONE
+# print("----- Search Student -----")
+
+# result = repository.find_student("S001")
+
+# if result:
+#     result.show_info()
+# else:
+#     print("Student not found!")
+
+# # UPDATE
+# print("----- Update Student -----")
+# success = repository.update_student("S001", "Seavik Mao", "Cybersecurity")
+
+# if success:
+#     print("Update successful!\n")
+# else:
+#     print("Student not found!\n")
+
+
+# # DELETE
+# print("----- Delete Student -----")
+# deleted = repository.delete_student("S002")
+
+# if deleted:
+#     print("Student deleted successfully!\n")
+# else:
+#     print("Student not found!\n")
+
+
+# # READ ALL AGAIN
+# print("----- All Students After Update & Delete -----")
+
+# for student in repository.get_all_students():
+#     student.show_info()
+#     print()
+
+
+
+#_____________________________________________________
+
+# from models.student import Student
+# from repositories.student_repository import StudentRepository
+# from services.student_service import StudentService
+
+# repository = StudentRepository()
+
+# # Dependency Injection
+# service = StudentService(repository)
+
+# student = Student(
+#     "S001",
+#     "Seavik",
+#     "seavik@example.com",
+#     "password123",
+#     "Computer Science"
+# )
+
+# try:
+#     service.register_student(student)
+#     print("Registration successful!")
+
+# except ValueError as error:
+#     print(f"Error: {error}")
+
+
+#__________________________________________________________
+
+# from models.student import Student
+# from repositories.student_repository import StudentRepository
+# from services.student_service import StudentService
+
+# # Create Repository
+# repository = StudentRepository()
+
+# # Dependency Injection
+# service = StudentService(repository)
+
+# # Create Student
+# student = Student(
+#     "S001",
+#     "Seavik",
+#     "seavik@example.com",
+#     "password123",
+#     "Computer Science"
+# )
+
+# try:
+#     # Register first
+#     service.register_student(student)
+#     print("Registration successful!")
+
+#     # Update Student
+#     service.update_student(
+#         "S001",
+#         "Seavik Mao",
+#         "Cybersecurity"
+#     )
+
+#     print("Update successful!")
+
+# except (ValueError, LookupError) as error:
+#     print(f"Error: {error}")
+
+# # Display updated student
+# result = repository.find_student("S001")
+
+# if result:
+#     result.show_info()
+
+
+
+
+#____________________________________________________
+
+# from models.student import Student
+# from repositories.student_repository import StudentRepository
+# from services.student_service import StudentService
+
+# # Create Repository
+# repository = StudentRepository()
+
+# # Dependency Injection
+# service = StudentService(repository)
+
+# student = Student(
+#     "S001",
+#     "Seavik",
+#     "seavik@example.com",
+#     "password123",
+#     "Computer Science"
+# )
+
+# try:
+#     # 1. Register Student
+#     service.register_student(student)
+#     print("Registration successful!")
+
+#     # 2. Delete Student
+#     service.delete_student("S001")
+#     print("Delete student successfully!")
+
+# except (ValueError, LookupError) as error:
+#     print(f"Error: {error}")
+
+# # 3. Check whether student still exists
+# result = repository.find_student("S001")
+
+# if result:
+#     result.show_info()
+# else:
+#     print("Student does not exist.")
+
+
+#__________________________________________________________
+
 from models.student import Student
 from repositories.student_repository import StudentRepository
+from services.student_service import StudentService
 
+repository = StudentRepository()
+service = StudentService(repository)
 
-# Create Student Objects
-student1 = Student(
+student = Student(
     "S001",
     "Seavik",
     "seavik@example.com",
@@ -108,65 +305,32 @@ student1 = Student(
     "Computer Science"
 )
 
-student2 = Student(
-    "S002",
-    "Dara",
-    "dara@example.com",
-    "password456",
-    "Software Engineering"
-)
+try:
+    # CREATE
+    service.register_student(student)
+    print("\n--- REGISTER SUCCESS ---")
 
-
-# Create Repository
-repository = StudentRepository()
-
-
-# CREATE
-repository.add_student(student1)
-repository.add_student(student2)
-
-
-# READ ALL
-print("\n----- All Students -----")
-
-for student in repository.get_all_students():
-    student.show_info()
-    print()
-
-
-# READ ONE
-print("----- Search Student -----")
-
-result = repository.find_student("S001")
-
-if result:
+    # READ ONE
+    print("\n--- GET STUDENT ---")
+    result = service.get_student("S001")
     result.show_info()
-else:
-    print("Student not found!")
 
-# UPDATE
-print("----- Update Student -----")
-success = repository.update_student("S001", "Seavik Mao", "Cybersecurity")
+    # UPDATE
+    service.update_student(
+        "S001",
+        "Seavik Mao",
+        "Cybersecurity"
+    )
+    print("\n--- UPDATE SUCCESS ---")
 
-if success:
-    print("Update successful!\n")
-else:
-    print("Student not found!\n")
+    # READ ALL
+    print("\n--- ALL STUDENTS ---")
+    for item in service.get_all_students():
+        item.show_info()
 
+    # DELETE
+    service.delete_student("S001")
+    print("\n--- DELETE SUCCESS ---")
 
-# DELETE
-print("----- Delete Student -----")
-deleted = repository.delete_student("S002")
-
-if deleted:
-    print("Student deleted successfully!\n")
-else:
-    print("Student not found!\n")
-
-
-# READ ALL AGAIN
-print("----- All Students After Update & Delete -----")
-
-for student in repository.get_all_students():
-    student.show_info()
-    print()
+except (ValueError, LookupError) as error:
+    print(f"Error: {error}")
