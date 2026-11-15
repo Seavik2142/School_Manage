@@ -2,11 +2,11 @@
 """Student-related application services."""
 
 from models.user import User
-
+from repositories.student_repository_interface import StudentRepositoryInterface
 
 class StudentService:
 
-    def __init__(self, student_repository):
+    def __init__(self, student_repository: StudentRepositoryInterface):
         self.student_repository = student_repository
 
     def register_student(self, student):

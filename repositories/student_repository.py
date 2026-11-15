@@ -1,6 +1,8 @@
 """Student data repository."""
+from repositories.student_repository_interface import StudentRepositoryInterface
 
-class StudentRepository:
+
+class StudentRepository(StudentRepositoryInterface):
 
     def __init__(self):
         self.students = []

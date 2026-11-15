@@ -290,13 +290,81 @@
 
 #__________________________________________________________
 
+# from models.student import Student
+# from repositories.student_repository import StudentRepository
+# from services.student_service import StudentService
+
+# repository = StudentRepository()
+# service = StudentService(repository)
+
+# student = Student(
+#     "S001",
+#     "Seavik",
+#     "seavik@example.com",
+#     "password123",
+#     "Computer Science"
+# )
+
+# try:
+#     # CREATE
+#     service.register_student(student)
+#     print("\n--- REGISTER SUCCESS ---")
+
+#     # READ ONE
+#     print("\n--- GET STUDENT ---")
+#     result = service.get_student("S001")
+#     result.show_info()
+
+#     # UPDATE
+#     service.update_student(
+#         "S001",
+#         "Seavik Mao",
+#         "Cybersecurity"
+#     )
+#     print("\n--- UPDATE SUCCESS ---")
+
+#     # READ ALL
+#     print("\n--- ALL STUDENTS ---")
+#     for item in service.get_all_students():
+#         item.show_info()
+
+#     # DELETE
+#     service.delete_student("S001")
+#     print("\n--- DELETE SUCCESS ---")
+
+# except (ValueError, LookupError) as error:
+#     print(f"Error: {error}")
+
+
+#_________________________________________________________
+
+# from repositories.test_student_repository import TestStudentRepository
+# from repositories.student_repository_interface import StudentRepositoryInterface
+# from services.student_service import StudentService
+
+
+# repository = TestStudentRepository()
+# service = StudentService(repository)
+
+# print(isinstance(repository, StudentRepositoryInterface))
+
+
+
+#______________________________________________________________________
+
+
 from models.student import Student
-from repositories.student_repository import StudentRepository
+from repositories.test_student_repository import TestStudentRepository
+from repositories.student_repository_interface import StudentRepositoryInterface
 from services.student_service import StudentService
 
-repository = StudentRepository()
+# Create Test Repository
+repository = TestStudentRepository()
+
+# Dependency Injection
 service = StudentService(repository)
 
+# Create Student
 student = Student(
     "S001",
     "Seavik",
@@ -305,32 +373,22 @@ student = Student(
     "Computer Science"
 )
 
-try:
-    # CREATE
-    service.register_student(student)
-    print("\n--- REGISTER SUCCESS ---")
+# CREATE
+service.register_student(student)
 
-    # READ ONE
-    print("\n--- GET STUDENT ---")
-    result = service.get_student("S001")
-    result.show_info()
+# UPDATE
+service.update_student(
+    "S001",
+    "Seavik Mao",
+    "AI Engineering"
+)
 
-    # UPDATE
-    service.update_student(
-        "S001",
-        "Seavik Mao",
-        "Cybersecurity"
-    )
-    print("\n--- UPDATE SUCCESS ---")
+# READ
+result = service.get_student("S001")
+result.show_info()
 
-    # READ ALL
-    print("\n--- ALL STUDENTS ---")
-    for item in service.get_all_students():
-        item.show_info()
+# DELETE
+service.delete_student("S001")
 
-    # DELETE
-    service.delete_student("S001")
-    print("\n--- DELETE SUCCESS ---")
-
-except (ValueError, LookupError) as error:
-    print(f"Error: {error}")
+# Check Interface
+print(isinstance(repository, StudentRepositoryInterface))
