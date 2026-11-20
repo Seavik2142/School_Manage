@@ -1,6 +1,7 @@
 from repositories.student_repository_interface import StudentRepositoryInterface
 
 class TestStudentRepository(StudentRepositoryInterface):
+    __test__ = False
 
     def __init__(self):
         self.students = []
